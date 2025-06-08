@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
 /// @title Advanced Auction Contract with Dynamic Extension and Partial Refunds
-/// @author Your Name
+/// @author Feerdus95
 /// @notice Implements an auction with 5% minimum increment, refund with 2% fee, and dynamic end time extension
 /// @dev Bids are in wei. Handles Ether only, rewards must be delivered separately.
 
