@@ -17,6 +17,7 @@ Creates an auction where people can bid cryptocurrency (ETH) on items. The contr
 ## 🛠 Main Functions
 
 ### For Bidders
+
 ```solidity
 function bid() external payable;           // Place a bid
 function withdrawDeposit() external;       // Get refund after auction ends
@@ -24,12 +25,16 @@ function partialWithdrawExcess() external; // Get excess money back during aucti
 ```
 
 ### For Sellers
+
 ```solidity
-function endAuction() external;     // End the auction and get paid
-function withdrawFees() external;    // Collect platform fees
+function endAuction() external;        // End the auction and get paid
+function withdrawFees() external;      // Collect platform fees
+function distributeRefunds() external; // Distribute refunds to all non-winners
+function emergencyWithdraw() external; // Recover stuck ETH (emergency only)
 ```
 
 ### For Everyone
+
 ```solidity
 function showWinner() external view returns (address, uint256); // See who won
 function showOffers() external view returns (Bid[] memory);     // See all bids
@@ -38,6 +43,7 @@ function showOffers() external view returns (Bid[] memory);     // See all bids
 ## 🏗 Contract Architecture
 
 ### State Variables
+
 - `seller`: Auction creator who receives winning bid
 - `highestBidder`: Current highest bidder
 - `highestBid`: Current highest bid amount
@@ -46,12 +52,14 @@ function showOffers() external view returns (Bid[] memory);     // See all bids
 - `collectedFees`: Accumulated commission fees
 
 ### Constants
+
 - `MIN_INCREMENT_PERCENT`: 105 (5% minimum increase)
 - `EXTENSION_TIME`: 600 seconds (10 minutes)
 - `EXTENSION_WINDOW`: 600 seconds (10 minutes before end)
 - `REFUND_FEE_PERCENT`: 2 (2% commission on refunds)
 
 ### Events
+
 ```solidity
 event NewOffer(address indexed bidder, uint amount);     // When someone bids
 event AuctionEnded(address indexed winner, uint amount); // When auction ends
@@ -61,6 +69,7 @@ event Withdrawal(address indexed bidder, uint amount);   // When funds withdrawn
 ## 🔒 Security Features
 
 Uses OpenZeppelin contracts:
+
 - **ReentrancyGuard**: Prevents double-spending attacks
 - **Ownable**: Admin controls
 - **Pausable**: Emergency stop functionality
@@ -76,6 +85,7 @@ Uses OpenZeppelin contracts:
    - `_durationMinutes`: Auction duration in minutes
 
 ### Constructor Example
+
 ```solidity
 // For an auction starting in 1 hour, lasting 24 hours
 startTime: 1703529600  // Unix timestamp
@@ -84,11 +94,12 @@ durationMinutes: 1440  // 24 * 60 minutes
 
 ## ⛽ Gas Costs
 
-| Function           | Estimated Gas |
-|--------------------|---------------|
-| `bid()`            | ~150,000      |
-| `withdrawDeposit()`| ~80,000       |
-| `endAuction()`     | ~100,000      |
+| Function            | Estimated Gas |
+| ------------------- | ------------- |
+| `bid()`             | ~150,000      |
+| `withdrawDeposit()` | ~80,000       |
+| `endAuction()`         | ~100,000      |
+| `distributeRefunds()`  | Varies by participants |
 
 ## 📁 Project Structure
 
@@ -108,11 +119,13 @@ SmartAuctionEthKipu/
 
 ## ❌ Error Messages
 
-| Error Message | Meaning |
-|--------------|---------|
-| "Auction is not active" | Auction hasn't started or has ended |
-| "Bid must be at least 5% higher" | Insufficient bid increment |
-| "Winner cannot withdraw refund" | Winner trying to withdraw |
-| "No funds to withdraw" | No deposit available |
+| Error Message                    | Meaning                             |
+| -------------------------------- | ----------------------------------- |
+| "Auction ended"                 | Auction has already concluded      |
+| "Not started"                   | Auction hasn't started yet         |
+| "Bid too low"                   | Increase your bid by at least 5%   |
+| "Winner cannot withdraw"        | Winners must use endAuction()      |
+| "No funds"                      | No deposit available to withdraw   |
+| "Auction not ended"             | Wait for auction to end            |
 
 > **⚠️ Disclaimer**: Test thoroughly before deploying to mainnet with real funds.
