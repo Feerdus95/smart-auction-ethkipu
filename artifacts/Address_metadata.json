@@ -1,0 +1,64 @@
+{
+	"compiler": {
+		"version": "0.8.30+commit.73712a01"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "target",
+						"type": "address"
+					}
+				],
+				"name": "AddressEmptyCode",
+				"type": "error"
+			}
+		],
+		"devdoc": {
+			"details": "Collection of functions related to the address type",
+			"errors": {
+				"AddressEmptyCode(address)": [
+					{
+						"details": "There's no code at `target` (it is not a contract)."
+					}
+				]
+			},
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"SmartAuctionEthKipu_flattened.sol": "Address"
+		},
+		"evmVersion": "prague",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"SmartAuctionEthKipu_flattened.sol": {
+			"keccak256": "0x34215e785b8639f8ade774186c01604e550b461cef1d4a364660cea239795030",
+			"urls": [
+				"bzz-raw://937f17356905805b251f98930f4f25a557118c7239de223687ece5ed699d81ed",
+				"dweb:/ipfs/QmNVUjdajrQ27sT8CoDnZiQQLWAi5SFx4Y7GJ9wct5VghM"
+			]
+		}
+	},
+	"version": 1
+}
